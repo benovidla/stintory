@@ -1,0 +1,26 @@
+STINTORY 1.0.0
+
+Vyber iba jeden režim na svojom systéme. Pred aktualizáciou ukonči starý tracker a Resolve. Daj pozor, aby si inštalačný priečinok neskôr nepremiestnil.
+
+WINDOWS: Nainštaluj Python 3.12 z python.org, aj tkinter a pip. Spusť setup_linked.bat (iba s Resolve) alebo setup_resident.bat (na pozadí po prihlásení). Linked: upravená ikona Resolve na ploche spúšťa Stintory hneď; ostatné skratky a panel úloh využijú krátku kontrolu cez Plánovač úloh približne každú minútu. Ak Resolve nebeží, kontrola ihneď skončí, tracker neostáva spustený. DISABLE-LINKED-CHECK.bat vypne kontrolu a ponechá iba spúšťanie cez upravenú skratku. Dáta ostávajú v %APPDATA%\ResolveEditTracker. Disable_auto.bat odstráni autostart a obnoví skratku. Review_history.bat otvorí históriu bez merania; pred spustením Resolve ju zavri.
+
+MACOS: Nainštaluj Python 3.12 z python.org (architektúra ako Resolve). Otvor Terminal v rozbalenom adresári a použi bash setup_linked.command alebo bash setup_resident.command. Linked vytvorí ~/Applications/DaVinci Resolve + Stintory.app; túto ikonu si pripni do Docku. Resident vytvorí Stintory.app a LaunchAgent. Disable_login.command vypne autostart. Dáta: ~/Library/Application Support/Stintory. Aplikácia je zatiaľ beta a macOS integrácia nebola natívne otestovaná.
+
+RESOLVE STUDIO: Preferences → System → General → External scripting using → Local, reštartuj Resolve. Spusť demo cez try_demo.bat / try_demo.command (na Macu po setup).
+
+JAZYK: Preferences → Appearance → Language. Zmena rozhrania je okamžitá bez reštartu. Invoice language je predvolený jazyk PDF, dá sa zmeniť aj v exporte konkrétnej faktúry. Na výber je 20 jazykov. Časť technických hlášok a HTML/CSV ostáva v angličtine.
+
+FAKTÚRA: Vyber projekt, menu, dodávateľa, klienta, číslo, splatnosť, DPH, platbu a voliteľne obdobie. Export vyberá uložené relácie podľa dátumu ich začiatku. Pred odoslaním skontroluj údaje a daňové náležitosti.
+
+GITHUB: Pozri anglické README a samostatný publikačný návod pre správcu. Zdrojové balíky sú beta, nie predkompilované podpísané .exe/.app. MIT LICENSE a CREDITS musia ostať v repozitári.
+
+MENA: Settings → Billing → Currency. Automaticky podľa jazyka a kompatibilného regiónu, alebo ručne. Výber zobrazuje kód a symbol, napr. CZK (Kč), EUR (€). Pri prvej voľbe novej meny nastav hodinovú sadzbu (začína na 0). Pri návrate k pôvodnej mene sa obnovia jej sadzby. Existujúce dáta aj bežiaca relácia si ponechajú pôvodnú sadzbu a menu. Pri faktúre vyber menu; prázdna voliteľná sadzba použije iba relácie v tej mene. Ak chceš fakturovať všetok čas v inej mene, zadaj do faktúry novú hodinovú sadzbu. Nejde o kurzový prepočet.
+
+OPRAVA LINKED (Windows): REPAIR-LINKED.bat znovu prepojí skratku bez inštalácie knižníc; pri chybe pozri setup-linked.log.
+
+FARBY: 8 paliet; systémová téma bola odstránená. Staré nastavenie System prejde na Emerald.
+
+PREHĽAD: Ikona Stintory na ploche (alebo run.bat / review_history.command) otvori prehlad aj bez Resolve. V Linked rezime sa po zatvoreni samostatne otvoreneho prehladu aplikacia ukonci. Ak medzitym spustis Resolve, zacne merat automaticky. Skryt do listy je v hlavnom okne aj mini casovaci; pri aktivnom Resolve meranie pokracuje. Klikni na ikonu Stintory pri hodinach alebo otvor skratku Stintory znova.
+
+KOMPATIBILITA: Zapisuje zistenu verziu Resolve do debug.log. Nefunkcne povinne API pozastavi meranie; neznama stranka Resolve sa automaticky nepocita. Nove verzie Resolve nie su garantovane.
+

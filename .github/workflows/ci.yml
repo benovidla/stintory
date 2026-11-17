@@ -1,0 +1,48 @@
+name: CI
+on: [push, pull_request, workflow_dispatch]
+permissions:
+  contents: read
+jobs:
+  tests:
+    strategy:
+      fail-fast: false
+      matrix:
+        python: ['3.12', '3.13']
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python }}
+      - run: sudo apt-get update && sudo apt-get install -y xvfb python3-tk libx11-6 fonts-dejavu-core fonts-freefont-ttf fonts-noto-core fonts-noto-cjk
+      - run: python -m pip install -r requirements.txt
+      - run: python -m compileall -q resolve_edit_tracker scripts
+      - run: xvfb-run -a python scripts/test_all.py
+      - run: xvfb-run -a python tests/manual_tray_smoke.py
+      - run: xvfb-run -a python tests/theme_smoke.py
+      - run: xvfb-run -a python tests/localization_smoke.py
+      - run: xvfb-run -a python tests/currency_smoke.py
+      - run: xvfb-run -a python tests/live_language_smoke.py
+      - run: xvfb-run -a python tests/hidden_startup_smoke.py
+  native-smoke:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [windows-latest, macos-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install -r requirements.txt
+      - run: python -m compileall -q resolve_edit_tracker scripts
+      - run: python -m unittest discover -s tests -p 'test_currency.py'
+      - run: python -m unittest discover -s tests -p 'test_i18n.py'
+      - run: python -m unittest discover -s tests -p 'test_state.py'
+      - run: python -m unittest discover -s tests -p 'test_dashboard.py'
+      - run: python -m unittest discover -s tests -p 'test_manual_tray.py'
+      - run: python -m unittest discover -s tests -p 'test_invoice.py'
+      - run: python -m unittest discover -s tests -p 'test_release_safety.py'
+      - run: python -m unittest discover -s tests -p 'test_probe_compatibility.py'
+      - run: python -m unittest discover -s tests -p 'test_publication_safety.py'

@@ -1,0 +1,32 @@
+# Development artifacts only: do not publish these binaries before the dependency-license and signing review.
+name: Native builds (experimental)
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  windows:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: cmd /c build_exe.bat
+      - uses: actions/upload-artifact@v4
+        with:
+          name: Stintory-Windows-native-test
+          path: dist/Stintory/
+  macos:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: bash build_mac.command
+      - run: ditto -c -k --sequesterRsrc --keepParent dist/Stintory.app Stintory-macOS-test.zip
+      - uses: actions/upload-artifact@v4
+        with:
+          name: Stintory-macOS-native-test
+          path: Stintory-macOS-test.zip

@@ -1,0 +1,13 @@
+# Architecture
+
+`run_tracker.py` parses the launch profile; `__main__.py` manages single-instance and the application lifecycle. `app.py` coordinates one Tk application thread, a tray adapter, and the monitor. `monitor.py` supervises the isolated Resolve probe process, consumes JSON, and restarts failed helpers. `probe.py` discovers locally installed Resolve scripting modules and polls active project, timeline, page, timecode and renders. Capability-aware read calls fail closed on essential API errors and treat timecode/render checks as optional. Detected version and unknown pages are logged locally. `winapi.py` provides Windows and macOS adapters for foreground application, idle, appearance and process detection. It intentionally retains that module name for compatibility.
+
+`state.py` contains the tracking state machine, inactive periods, checkpoint recovery and statistics; `models.py` describes sessions and settings; `store.py` persists atomically replaced JSON. `dashboard.py` renders aggregated project/timeline information and updates changing rows, not an embedded browser. `i18n.py` loads static catalogs, `invoice.py` supports an independent export locale. `history_window.py`, `settings_window.py`, `csvio.py` and `timesheet.py` provide editing and export.
+
+On Windows the linked desktop launcher and a per-user scheduled check start the tracker; the latter briefly checks for Resolve every minute and exits when absent. On macOS Linked is launcher-only. Linked mode monitors the OS process, stops recording upon exit and saves before ending. Resident mode stays open and records only while a project is available; a disconnected helper does not authorize tracking. The same data path is shared by both modes, protected by a per-user single-instance mutex/file lock. A manually launched review instance can automatically attach when Resolve starts. An explicitly offline review command remains separate.
+
+## Known limitations
+
+Project/timeline identification is currently name-based. Renaming creates a new entry; two timelines with the same name can be combined. Cross-project/session times are estimated from periodic sampling, not a per-frame event log. Activity tracking can be imperfect during Resolve modal dialogs or unavailable OS APIs. Local checkpoints do not guarantee durability against disk corruption/power loss. Language catalog does not translate data fields or all diagnostics. Native macOS menu bar and launcher need manual validation. There are no production-signed binaries in this source preview.
+
+Language changes rebuild existing localized dashboard, mini, preferences and history widgets on the Tk thread. Session state and the helper process remain intact. The tray menu resolves labels dynamically.
