@@ -58,8 +58,11 @@ class ReleaseSafetyTests(unittest.TestCase):
             self.assertEqual(json.loads(p.read_text()),{'old':1});self.assertEqual(list(Path(d).glob('*.tmp')),[])
     def test_recovery_idempotent_and_legacy_duration(self):
         with tempfile.TemporaryDirectory() as d:
-            st=SessionStore(d); a=models.Session('A',1,31,30,25,'EUR');st.save_current(a)
-            kw=dict(clock=lambda:100.,idle_fn=lambda:0,foreground_fn=lambda:(12,'resolve.exe'),autostart_get=lambda:False,autostart_set=lambda *a:False)
+            # Use a realistic POSIX timestamp: Windows cannot reliably convert
+            # local midnight/Monday around the Unix epoch.
+            base=1_800_000_000.0
+            st=SessionStore(d); a=models.Session('A',base,base+30,30,25,'EUR');st.save_current(a)
+            kw=dict(clock=lambda:base+100,idle_fn=lambda:0,foreground_fn=lambda:(12,'resolve.exe'),autostart_get=lambda:False,autostart_set=lambda *a:False)
             app=AppState(store=SessionStore(d),**kw);self.assertEqual(app.sessions[0].duration_sec,30)
             app.store.save_current(a);app=AppState(store=SessionStore(d),**kw);self.assertEqual(len(app.sessions),1)
     def test_corrupt_checkpoint_is_quarantined(self):

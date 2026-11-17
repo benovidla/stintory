@@ -13,8 +13,12 @@ GUI checks in Xvfb passed:
 - Nine theme palettes, manual tray widget behavior and currency/invoice UI smoke checks.
 - Invoice-generation tests in the complete automated run, including all 20 supported invoice languages in this Linux environment.
 
+## First GitHub CI run and portability correction
+
+The initial GitHub CI run passed Linux (Python 3.12 and 3.13) and macOS native smoke. Windows native smoke stopped in the recovery test when converting a synthetic timestamp near the Unix epoch to local midnight. The recovery and startup test fixtures now use realistic fixed timestamps; the assertions and application code are unchanged. The native CI matrix now includes the six startup regression tests. A targeted Linux rerun passed 36 tests across five modules. Confirmation on the Windows and macOS GitHub runners is pending.
+
 ## Native status and limitations
 
-Windows Linked was user-tested by the maintainer on their Windows PC with Resolve Studio 21 during private development. Basic installation, automatic launch and project/timeline tracking were confirmed. A startup issue was reported when hiding the tracker before Resolve was ready, and language previously required a restart. The corrections above were tested in simulation only. Retest this exact release on real Windows before marking it stable; particularly repeat the hidden-startup and live-language scenarios. Windows Resident and both macOS profiles remain experimental. Resolve API capability checks are not guarantees of future compatibility. Windows/macOS tray integration, native performance, optional executable builds and GitHub Actions have not been verified in this environment.
+Windows Linked was user-tested by the maintainer on their Windows PC with Resolve Studio 21 during private development. Basic installation, automatic launch and project/timeline tracking were confirmed. A startup issue was reported when hiding the tracker before Resolve was ready, and language previously required a restart. The corrections above were tested in simulation only. Retest this exact release on real Windows before marking it stable; particularly repeat the hidden-startup and live-language scenarios. Windows Resident and both macOS profiles remain experimental. Resolve API capability checks are not guarantees of future compatibility. Windows/macOS tray integration, native performance, optional executable builds have not been verified in this environment. The initial GitHub CI results are recorded above; the corrected workflow still needs a fresh run.
 
 The public release is a source-distributed beta, not a signed native binary. See TESTING.md for the native checklist.

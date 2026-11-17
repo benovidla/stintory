@@ -51,7 +51,7 @@ class StartupRecovery(unittest.TestCase):
 
     def test_return_to_resolve_without_mouse_movement(self):
         with tempfile.TemporaryDirectory() as tmp:
-            clock=[1000.0]; idle=[12.0]; foreground=[(22,'explorer.exe')]
+            clock=[1_800_000_000.0]; idle=[12.0]; foreground=[(22,'explorer.exe')]
             state=AppState(store=SessionStore(tmp),clock=lambda:clock[0],idle_fn=lambda:idle[0],foreground_fn=lambda:foreground[0],own_pid=999,toast_fn=lambda **_:None,autostart_get=lambda:False,autostart_set=lambda *_:False)
             state.update_settings(trackOnlyWhenFrontmost=True,idleMinutes=5)
             s=models.ResolveStatus(running=True,api_ok=True,page='edit',project='P',timeline='T')
@@ -67,7 +67,7 @@ class StartupRecovery(unittest.TestCase):
 
     def test_away_does_not_resume_if_idle_limit_exceeded(self):
         with tempfile.TemporaryDirectory() as tmp:
-            clock=[1000.0]; idle=[400.0]
+            clock=[1_800_000_000.0]; idle=[400.0]
             state=AppState(store=SessionStore(tmp),clock=lambda:clock[0],idle_fn=lambda:idle[0],foreground_fn=lambda:(33,'resolve.exe'),own_pid=999,toast_fn=lambda **_:None,autostart_get=lambda:False,autostart_set=lambda *_:False)
             state.update_settings(trackOnlyWhenFrontmost=True,idleMinutes=5)
             state.status=models.ResolveStatus(running=True,api_ok=True,page='edit',project='P',timeline='T');state.connection=models.CONNECTED;state.state=models.IDLE_PAUSED;state.idle_pause_reason='away'
