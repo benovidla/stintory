@@ -5,6 +5,28 @@
 </div>
 
 
+## Download Stintory
+
+**Version 1.0.0 — Public Beta**
+
+| Platform | Linked | Resident |
+| :--- | :--- | :--- |
+| **Windows** | [![Download Windows Linked](https://img.shields.io/badge/Download-Linked-6F9EC6?style=for-the-badge&logo=windows&logoColor=white)](https://github.com/benovidla/stintory/releases/download/v1.0.0-beta.1/Stintory-1.0.0-Windows-linked.zip) | [![Download Windows Resident](https://img.shields.io/badge/Download-Resident-555B63?style=for-the-badge)](https://github.com/benovidla/stintory/releases/download/v1.0.0-beta.1/Stintory-1.0.0-Windows-resident.zip) |
+| **macOS** | [![Download macOS Linked](https://img.shields.io/badge/Download-Linked-6F9EC6?style=for-the-badge&logo=apple&logoColor=white)](https://github.com/benovidla/stintory/releases/download/v1.0.0-beta.1/Stintory-1.0.0-macOS-linked.zip) | [![Download macOS Resident](https://img.shields.io/badge/Download-Resident-555B63?style=for-the-badge)](https://github.com/benovidla/stintory/releases/download/v1.0.0-beta.1/Stintory-1.0.0-macOS-resident.zip) |
+
+- **Linked:** Starts alongside DaVinci Resolve through the configured shortcut or launcher.
+- **Resident:** Runs in the background and waits for Resolve activity.
+
+Windows Linked is the recommended beta edition. Windows Resident and both macOS editions are experimental.
+
+Choose **one edition** for your operating system. These ZIP files contain source-based installers, not signed standalone executables.
+
+**Requirements:** DaVinci Resolve Studio with local scripting enabled and Python 3.12.
+
+[Installation guide](#install-from-source-recommended-for-this-beta) · [All releases](https://github.com/benovidla/stintory/releases) · [SHA-256 checksums](https://github.com/benovidla/stintory/releases/download/v1.0.0-beta.1/Stintory-1.0.0-SHA256.txt)
+
+---
+
 ![Stintory dashboard (sample data)](docs/dashboard.png)
 
 > Dashboard preview from 1.0.0 with synthetic demo data.
